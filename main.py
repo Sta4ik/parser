@@ -41,11 +41,12 @@ for element in range(1, len(links)):
     for item in range(1, len(links[element])):
         finalLinks.append(links[element][item])
 
-df = pd.DataFrame(columns=["Type", "Capacity", "Speed", "URL"])
+df = pd.DataFrame(columns=["Name", "Type", "Capacity", "Speed", "URL"])
 
 for element in range(1, len(finalLinks)):
     driver.get(finalLinks[element])
     flash = []
+    flash.append(driver.find_element(By.XPATH, '/html/body/div[1]/main/div[2]/h1').get_attribute('textContent'))
     if(driver.find_element(By.XPATH, '//*[@id="product-data"]/div[1]/section/div[1]/div[1]/div/table/tbody/tr[1]/th/span').get_attribute('textContent') == 'Интерфейс'):
         flash.append(driver.find_element(By.XPATH, '//*[@id="product-data"]/div[1]/section/div[1]/div[1]/div/table/tbody/tr[1]/td').get_attribute('textContent'))
     else: 
@@ -60,4 +61,4 @@ for element in range(1, len(finalLinks)):
         flash.append(None)
     flash.append(finalLinks[element])
     df.loc[len(df)] = flash
-df.to_csv('output2.csv', index=False, encoding='utf-8')
+df.to_csv('output.csv', index=False, encoding='utf-8')
